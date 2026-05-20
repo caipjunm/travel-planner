@@ -7,7 +7,7 @@
 // 3. 点「部署」，记下 Worker 的 URL（类似 https://travel-proxy.你的用户名.workers.dev）
 // 4. 在旅行计划生成器的 API 地址填入这个 URL
 
-const API_KEY = 'sk-cbab2349c7a947c39f7320dcf4210603';
+const API_KEY = 'YOUR_DEEPSEEK_API_KEY';  // ← 在 Cloudflare Worker 后台替换为你的 Key
 const TARGET = 'https://api.deepseek.com/v1/chat/completions';
 
 export default {
