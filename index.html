@@ -106,15 +106,17 @@ body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:#0f0f23;c
 
 <div class="ai-settings" id="aiSettings">
 <div class="ai-row">
-  <div class="form-g"><label>API 地址</label><input id="aiEndpoint" value="https://api.deepseek.com/v1/chat/completions" placeholder="OpenAI 兼容 API"></div>
-  <div class="form-g"><label>API Key</label><input id="aiKey" type="password" placeholder="sk-..."></div>
+  <div class="form-g"><label>API 地址</label><input id="aiEndpoint" value="" placeholder="代理地址 或 https://api.deepseek.com/v1/chat/completions"></div>
+  <div class="form-g"><label>API Key</label><input id="aiKey" type="password" placeholder="sk-...（使用代理可不填）"></div>
   <div class="form-g"><label>模型</label><input id="aiModel" value="deepseek-chat" style="min-width:140px;"></div>
   <button class="btn btn-go" onclick="saveAISettings()" style="font-size:11px;padding:8px 16px;">💾 保存</button>
 </div>
 <div class="hint">
-  Key 仅保存在你的浏览器中，不会被上传。支持 <a href="https://platform.deepseek.com/api_keys" target="_blank">DeepSeek</a>（¥1/百万token）、
-  <a href="https://console.anthropic.com/" target="_blank">Anthropic</a> 等任何 OpenAI 兼容 API。<br>
-  如遇 CORS 错误，需部署一个代理。最简单的方案：<a href="https://corsproxy.io/" target="_blank">CORS Proxy</a>
+  <b>🔐 推荐使用代理保护 Key：</b>部署 <code>proxy-worker.js</code> 到
+  <a href="https://dash.cloudflare.com/" target="_blank">Cloudflare Workers</a>（免费），
+  把 Worker 地址填入上方「API 地址」，Key 栏留空即可。<br>
+  代理部署后，Key 只存在 Cloudflare 服务端，前端不会暴露。<br>
+  <b>直接使用：</b>填 DeepSeek API 地址 + Key（Key 仅存浏览器本地，但本地打开可能有 CORS 问题）
 </div>
 </div>
 
@@ -233,11 +235,12 @@ function buildAIPrompt(city, days, style, budget, people, startDate, weatherData
 }
 
 function callAI(prompt) {
+  var headers = {'Content-Type': 'application/json'};
+  if (AI_KEY) headers['Authorization'] = 'Bearer ' + AI_KEY;
   return fetch(AI_ENDPOINT, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + AI_KEY},
+    method: 'POST', headers: headers,
     body: JSON.stringify({model: AI_MODEL, messages: [{role: 'user', content: prompt}], temperature: 0.7, max_tokens: 4096})
-  }).then(function(r){ if(!r.ok) throw new Error('API error: '+r.status); return r.json(); })
+  }).then(function(r){ if(!r.ok) throw new Error('API error: '+r.status+' - 请检查 API 地址和 Key'); return r.json(); })
   .then(function(data){ return data.choices[0].message.content; });
 }
 
