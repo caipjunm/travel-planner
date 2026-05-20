@@ -9,26 +9,29 @@
 body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:#0f0f23;color:#e8e8e8}
 .app{max-width:1500px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
 
-/* Header */
-.app-header{background:linear-gradient(135deg,#e94560 0%,#c23152 40%,#0f3460 100%);padding:14px 40px;text-align:center}
+.app-header{background:linear-gradient(135deg,#e94560,#c23152,#0f3460);padding:14px 40px;text-align:center}
 .app-header h1{font-size:18px;letter-spacing:2px;margin:0}
 .app-header p{font-size:11px;opacity:.7;margin-top:2px}
 
-/* Form */
 .form-panel{background:#16213e;border-bottom:1px solid rgba(255,255,255,.06);padding:12px 40px}
 .form-row{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
 .form-g{display:flex;flex-direction:column;gap:4px}
 .form-g label{font-size:11px;color:#667788;letter-spacing:1px}
-.form-g input,.form-g select{padding:9px 14px;border-radius:8px;border:1px solid #334;background:#0f0f23;color:#e8e8e8;font-size:13px;min-width:120px;font-family:inherit}
+.form-g input,.form-g select{padding:9px 14px;border-radius:8px;border:1px solid #334;background:#0f0f23;color:#e8e8e8;font-size:13px;min-width:110px;font-family:inherit}
 .form-g input:focus,.form-g select:focus{outline:none;border-color:#e94560}
-.btn{padding:10px 24px;border-radius:8px;border:none;font-weight:700;cursor:pointer;font-size:13px;font-family:inherit;white-space:nowrap}
-.btn-go{background:#e94560;color:white}
-.btn-go:hover{background:#d63850}
-.btn-out{background:transparent;color:#e94560;border:1px solid #e94560}
-.btn-out:hover{background:rgba(233,69,96,.1)}
-.status-msg{font-size:11px;color:#667;margin-left:8px}
+.btn{padding:10px 24px;border-radius:8px;border:none;font-weight:700;cursor:pointer;font-size:13px;font-family:inherit;white-space:nowrap;transition:all .15s}
+.btn-go{background:#e94560;color:white}.btn-go:hover{background:#d63850}
+.btn-ai{background:transparent;color:#f0a050;border:1px solid #f0a050}.btn-ai:hover{background:rgba(240,160,80,.1)}
+.btn-ai.on{background:rgba(240,160,80,.2);color:#f5c060;border-color:#f5c060}
+.status-msg{font-size:11px;color:#667}
 
-/* Content */
+/* AI Settings panel */
+.ai-settings{display:none;background:#111827;border-top:1px solid rgba(240,160,80,.2);padding:14px 40px}
+.ai-settings.show{display:block}
+.ai-settings .ai-row{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+.ai-settings .hint{font-size:10px;color:#667;margin-top:8px;line-height:1.6}
+.ai-settings .hint a{color:#f0a050}
+
 .content{flex:1;display:flex;min-height:0}
 .plan-panel{width:450px;min-width:450px;background:#111827;overflow-y:auto;max-height:calc(100vh - 200px);border-right:1px solid rgba(255,255,255,.06)}
 .map-panel{flex:1;position:relative;min-height:400px}
@@ -38,7 +41,6 @@ body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:#0f0f23;c
 .plan-title{font-size:17px;font-weight:700;margin-bottom:2px}
 .plan-subtitle{font-size:12px;color:#667;margin-bottom:14px}
 
-/* Day card */
 .day-card{background:#16213e;border-radius:12px;margin-bottom:14px;border:1px solid rgba(255,255,255,.05);overflow:hidden}
 .day-hd{padding:10px 16px;background:rgba(255,255,255,.02);font-weight:700;font-size:13px;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:10px;cursor:pointer}
 .day-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
@@ -50,77 +52,83 @@ body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:#0f0f23;c
 .stop-row.active{background:rgba(233,69,96,.08);border-left-color:#e94560}
 .stop-num{width:22px;height:22px;min-width:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:white}
 .stop-num.s0{background:#e94560}.stop-num.s1{background:#5b9bd5}.stop-num.s2{background:#a080d0}.stop-num.s3{background:#50d090}.stop-num.s4{background:#f0a050}
-.stop-info{flex:1;min-width:0}
-.stop-info .s-name{font-size:13px;color:#dde}
-.stop-info .s-note{font-size:11px;color:#667;margin-top:1px}
+.stop-info{flex:1;min-width:0}.stop-info .s-name{font-size:13px;color:#dde}.stop-info .s-note{font-size:11px;color:#667;margin-top:1px}
 
-.seg-link{display:flex;align-items:center;gap:8px;padding:5px 16px 5px 38px;text-decoration:none;cursor:pointer;transition:background .12s}
+.seg-link{display:flex;align-items:center;gap:8px;padding:5px 16px 5px 34px;text-decoration:none;cursor:pointer;transition:background .12s}
 .seg-link:hover{background:rgba(240,160,80,.08)}
 .seg-mode{display:inline-block;padding:2px 7px;border-radius:6px;font-size:10px;font-weight:600;white-space:nowrap}
 .seg-mode.walk{background:#1a3a2c;color:#50d090}.seg-mode.taxi{background:#3d2a1a;color:#f0a050}
 .seg-mode.metro{background:#1a2a3d;color:#5b9bd5}.seg-mode.train{background:#2a1a3d;color:#a080d0}
 .seg-desc{font-size:11px;color:#889}
 
-/* Weather summary */
 .weather-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
 .w-chip{padding:6px 12px;border-radius:16px;font-size:11px;background:#16213e;border:1px solid rgba(255,255,255,.06)}
-.w-chip .w-date{color:#667}.w-chip .w-icon{font-size:16px}.w-chip .w-desc{color:#dde;font-weight:700}
+.w-chip .w-date{color:#667}.w-chip .w-icon{font-size:16px}
 
-/* Budget */
 .budget-bar{padding:14px 16px;font-size:12px;color:#889;line-height:2;border-top:1px solid rgba(255,255,255,.06)}
 
-/* Legend */
 .legend{position:absolute;bottom:20px;right:20px;z-index:1000;background:rgba(15,15,35,.92);border-radius:10px;padding:12px 16px;font-size:10px;border:1px solid rgba(255,255,255,.08);pointer-events:none;line-height:2}
 .legend .ld{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:middle}
 
-/* Empty */
 .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:#445;gap:12px}
-.empty .eicon{font-size:48px}
-.empty p{font-size:14px}
+.empty .eicon{font-size:48px}.empty p{font-size:14px}
 
-/* Loading */
-.loading{display:flex;align-items:center;justify-content:center;padding:40px;gap:10px;color:#667;font-size:13px}
+.loading{display:flex;align-items:center;justify-content:center;padding:40px;gap:10px;color:#667;font-size:13px;flex-direction:column}
 .spinner{width:24px;height:24px;border:2px solid #334;border-top-color:#e94560;border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#e94560;color:white;padding:10px 24px;border-radius:20px;font-size:13px;z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none}
 .toast.show{opacity:1}
+
+.ai-badge{display:inline-block;background:rgba(240,160,80,.15);color:#f0a050;font-size:10px;padding:2px 8px;border-radius:8px;margin-left:6px;font-weight:600}
 </style>
 </head>
 <body>
 <div class="app">
 <div class="app-header">
   <h1>📍 旅行计划生成器</h1>
-  <p>输入城市和日期，自动生成行程安排 + 路线图 + 预算估算</p>
+  <p>输入城市和日期 → AI 分析 + 实时天气 → 行程 + 地图 + 预算</p>
 </div>
 
 <div class="form-panel">
 <div class="form-row">
-  <div class="form-g"><label>🏙 目的地</label><input id="fCity" list="cityList" placeholder="如：长沙" value="长沙"><datalist id="cityList"></datalist></div>
+  <div class="form-g"><label>🏙 目的地</label><input id="fCity" list="cityList" placeholder="任意城市，如：大理" value="长沙"><datalist id="cityList"></datalist></div>
   <div class="form-g"><label>📅 出发日期</label><input id="fDate" type="date" value="2026-05-22"></div>
   <div class="form-g"><label>📆 天数</label><select id="fDays"><option value="1">1天</option><option value="2">2天</option><option value="3" selected>3天</option><option value="4">4天</option><option value="5">5天</option></select></div>
   <div class="form-g"><label>🎯 风格</label><select id="fStyle"><option value="moderate" selected>适中</option><option value="packed">紧凑打卡</option><option value="relaxed">悠闲慢游</option></select></div>
   <div class="form-g"><label>💰 预算</label><select id="fBudget"><option value="mid" selected>中档</option><option value="budget">经济实惠</option><option value="luxury">轻奢享受</option></select></div>
   <div class="form-g"><label>👥 人数</label><select id="fPeople"><option value="1">1人</option><option value="2" selected>2人</option><option value="3">3人</option><option value="4">4人</option></select></div>
+  <button class="btn btn-ai" id="btnAI" onclick="toggleAI()" title="启用 AI 后支持任意城市，AI 实时搜索分析生成计划">🤖 AI</button>
   <button class="btn btn-go" id="btnGen" onclick="generatePlan()">✨ 生成计划</button>
+  <span class="status-msg" id="genMode">离线模式 · 12个预设城市</span>
+</div>
+</div>
+
+<div class="ai-settings" id="aiSettings">
+<div class="ai-row">
+  <div class="form-g"><label>API 地址</label><input id="aiEndpoint" value="https://api.deepseek.com/v1/chat/completions" placeholder="OpenAI 兼容 API"></div>
+  <div class="form-g"><label>API Key</label><input id="aiKey" type="password" placeholder="sk-..."></div>
+  <div class="form-g"><label>模型</label><input id="aiModel" value="deepseek-chat" style="min-width:140px;"></div>
+  <button class="btn btn-go" onclick="saveAISettings()" style="font-size:11px;padding:8px 16px;">💾 保存</button>
+</div>
+<div class="hint">
+  Key 仅保存在你的浏览器中，不会被上传。支持 <a href="https://platform.deepseek.com/api_keys" target="_blank">DeepSeek</a>（¥1/百万token）、
+  <a href="https://console.anthropic.com/" target="_blank">Anthropic</a> 等任何 OpenAI 兼容 API。<br>
+  如遇 CORS 错误，需部署一个代理。最简单的方案：<a href="https://corsproxy.io/" target="_blank">CORS Proxy</a>
 </div>
 </div>
 
 <div class="content">
 <div class="plan-panel" id="planPanel">
-  <div class="empty" id="emptyState"><div class="eicon">🗺</div><p>设置参数后点击「生成计划」</p><p style="font-size:12px;color:#556;">目前已支持 12 个热门城市</p></div>
-  <div class="loading" id="loadingState" style="display:none"><div class="spinner"></div><span id="loadingText">正在生成…</span></div>
+  <div class="empty" id="emptyState"><div class="eicon">🗺</div><p>设置参数，点「生成计划」</p><p style="font-size:12px;color:#556;">开启 🤖 AI 后支持任意城市</p></div>
+  <div class="loading" id="loadingState" style="display:none"><div class="spinner"></div><div id="loadingText">正在生成…</div></div>
   <div class="plan-inner" id="planContent" style="display:none"></div>
 </div>
 <div class="map-panel">
   <div id="map"></div>
   <div class="legend" id="legend" style="display:none">
-    <div><span class="ld" style="background:#e94560"></span>Day1</div>
-    <div><span class="ld" style="background:#5b9bd5"></span>Day2</div>
-    <div><span class="ld" style="background:#a080d0"></span>Day3</div>
-    <div><span class="ld" style="background:#50d090"></span>Day4</div>
-    <div><span class="ld" style="background:#f0a050"></span>Day5</div>
-    <div style="font-size:9px;color:#667;margin-top:4px;">点击路段→高德导航</div>
+    <div><span class="ld" style="background:#e94560"></span> Day1 <span class="ld" style="background:#5b9bd5"></span> Day2 <span class="ld" style="background:#a080d0"></span> Day3</div>
+    <div style="font-size:9px;color:#667;margin-top:4px;">点击路段 → 高德导航</div>
   </div>
 </div>
 </div>
@@ -129,234 +137,121 @@ body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:#0f0f23;c
 
 <script>
 // ============================================================
-//  CITY DATABASE — 12 cities with attractions + foods
-//  Each entry: { name, lat, lng, indoor, type: 'view'|'food'|'hotel'|'trans' }
+//  CITY DATABASE — 12 cities, used as offline fallback
 // ============================================================
 var CITY_DB = {
-  '长沙': {
-    center: [112.977, 28.200], zoom: 14, province: '湖南',
-    spots: [
-      {name:'橘子洲头',lat:28.1831,lng:112.956,indoor:false,type:'view',desc:'毛爷爷雕像，观光小火车¥40',time:'2h'},
-      {name:'岳麓山',lat:28.1885,lng:112.943,indoor:false,type:'view',desc:'缆车¥30，岳麓书院¥40，爱晚亭',time:'3h'},
-      {name:'湖南博物院',lat:28.2105,lng:112.987,indoor:true,type:'view',desc:'马王堆汉墓，辛追夫人，免费需预约',time:'2.5h'},
-      {name:'IFS国金中心',lat:28.1975,lng:112.9735,indoor:true,type:'view',desc:'KAWS打卡，购物避雨',time:'1.5h'},
-      {name:'超级文和友',lat:28.192,lng:112.972,indoor:true,type:'view',desc:'80年代老长沙沉浸空间',time:'1.5h'},
-      {name:'古开福寺',lat:28.2155,lng:112.9815,indoor:true,type:'view',desc:'千年古刹¥10，送三炷香',time:'1h'},
-      {name:'太平老街',lat:28.1935,lng:112.9705,indoor:false,type:'view',desc:'千年古街，小吃+贾谊故居',time:'1h'},
-      {name:'杜甫江阁',lat:28.1895,lng:112.9685,indoor:false,type:'view',desc:'湘江夜景，路边乐队',time:'0.5h'},
-      {name:'黄兴路步行街',lat:28.1935,lng:112.974,indoor:false,type:'view',desc:'3D大屏，霓虹夜景',time:'1h'},
-      {name:'潮宗街',lat:28.2025,lng:112.975,indoor:false,type:'view',desc:'明清老街+民国建筑+咖啡馆',time:'1h'},
-      {name:'都正街',lat:28.1905,lng:112.9775,indoor:false,type:'view',desc:'南门口网红小吃街',time:'0.5h'},
-      {name:'坡子街',lat:28.1915,lng:112.97,indoor:false,type:'view',desc:'千年美食街，火宫殿',time:'0.5h'},
-      {name:'笨萝卜浏阳菜馆',lat:28.195,lng:112.975,indoor:true,type:'food',desc:'酸菜炒粉皮+金钱蛋 ¥50',time:'1h'},
-      {name:'聚味瞿记',lat:28.194,lng:112.973,indoor:true,type:'food',desc:'口味虾+蒜蓉虾 ¥120',time:'1h'},
-      {name:'公交新村粉店',lat:28.186,lng:112.979,indoor:true,type:'food',desc:'牛肉粉+雪里蕻 ¥15',time:'0.5h'},
-      {name:'茶颜悦色',lat:28.196,lng:112.974,indoor:true,type:'food',desc:'声声乌龙、幽兰拿铁 ¥18',time:'0.3h'},
-      {name:'黑色经典',lat:28.193,lng:112.971,indoor:true,type:'food',desc:'臭豆腐+糖油粑粑 ¥20',time:'0.3h'},
-    ],
-    station: {name:'长沙站',lat:28.195,lng:112.9987},
-  },
-  '衡阳': {
-    center: [112.615, 26.895], zoom: 13, province: '湖南',
-    spots: [
-      {name:'石鼓书院',lat:26.904,lng:112.607,indoor:false,type:'view',desc:'中国四大书院之首，免费',time:'1h'},
-      {name:'东洲岛',lat:26.882,lng:112.623,indoor:false,type:'view',desc:'湘江绿岛，免费',time:'1.5h'},
-      {name:'保卫里',lat:26.895,lng:112.618,indoor:false,type:'view',desc:'铁路文化街区',time:'1h'},
-      {name:'南岳衡山',lat:27.235,lng:112.742,indoor:false,type:'view',desc:'五岳之一，祝融峰¥58',time:'5h'},
-      {name:'草桥鱼粉',lat:26.905,lng:112.607,indoor:true,type:'food',desc:'非遗鱼骨汤粉 ¥15',time:'0.5h'},
-      {name:'衡阳土菜',lat:26.896,lng:112.61,indoor:true,type:'food',desc:'唆螺+油豆腐 ¥60',time:'1h'},
-    ],
-    station: {name:'衡阳站',lat:26.893,lng:112.619},
-  },
-  '北京': {
-    center: [116.407, 39.904], zoom: 13, province: '北京',
-    spots: [
-      {name:'故宫',lat:39.916,lng:116.397,indoor:false,type:'view',desc:'¥60需预约，中轴线穿越',time:'3h'},
-      {name:'天安门广场',lat:39.905,lng:116.397,indoor:false,type:'view',desc:'免费，看升旗',time:'1h'},
-      {name:'颐和园',lat:39.999,lng:116.275,indoor:false,type:'view',desc:'¥30，皇家园林',time:'3h'},
-      {name:'八达岭长城',lat:40.359,lng:116.02,indoor:false,type:'view',desc:'¥40，北段精华',time:'4h'},
-      {name:'国家博物馆',lat:39.905,lng:116.401,indoor:true,type:'view',desc:'免费需预约，地下一层古代中国',time:'2.5h'},
-      {name:'南锣鼓巷',lat:39.938,lng:116.403,indoor:false,type:'view',desc:'胡同+文创小店',time:'1.5h'},
-      {name:'798艺术区',lat:39.984,lng:116.495,indoor:true,type:'view',desc:'免费，当代艺术画廊',time:'2h'},
-      {name:'什刹海',lat:39.937,lng:116.387,indoor:false,type:'view',desc:'免费，胡同游+酒吧街',time:'1.5h'},
-      {name:'全聚德',lat:39.899,lng:116.411,indoor:true,type:'food',desc:'烤鸭 ¥200',time:'1.5h'},
-      {name:'护国寺小吃',lat:39.935,lng:116.373,indoor:true,type:'food',desc:'豆汁+焦圈+驴打滚 ¥30',time:'0.5h'},
-      {name:'簋街',lat:39.938,lng:116.427,indoor:false,type:'food',desc:'麻辣小龙虾一条街 ¥100',time:'1h'},
-    ],
-    station: {name:'北京站',lat:39.905,lng:116.427},
-  },
-  '上海': {
-    center: [121.473, 31.230], zoom: 13, province: '上海',
-    spots: [
-      {name:'外滩',lat:31.240,lng:121.490,indoor:false,type:'view',desc:'免费，万国建筑群+陆家嘴夜景',time:'1.5h'},
-      {name:'东方明珠',lat:31.240,lng:121.500,indoor:true,type:'view',desc:'¥199，俯瞰浦江',time:'2h'},
-      {name:'豫园',lat:31.228,lng:121.492,indoor:false,type:'view',desc:'¥40，明代园林+城隍庙小吃',time:'2h'},
-      {name:'南京路步行街',lat:31.237,lng:121.475,indoor:false,type:'view',desc:'中华第一商业街',time:'1.5h'},
-      {name:'上海博物馆',lat:31.230,lng:121.476,indoor:true,type:'view',desc:'免费，青铜器+书画',time:'2h'},
-      {name:'田子坊',lat:31.210,lng:121.470,indoor:false,type:'view',desc:'石库门里弄+创意小店',time:'1.5h'},
-      {name:'迪士尼',lat:31.144,lng:121.660,indoor:false,type:'view',desc:'¥475起，全天沉浸',time:'8h'},
-      {name:'小杨生煎',lat:31.229,lng:121.482,indoor:true,type:'food',desc:'生煎包 ¥25',time:'0.5h'},
-      {name:'光明邨',lat:31.218,lng:121.465,indoor:true,type:'food',desc:'鲜肉月饼+酱鸭 ¥60',time:'0.5h'},
-    ],
-    station: {name:'上海站',lat:31.253,lng:121.455},
-  },
-  '杭州': {
-    center: [120.155, 30.274], zoom: 13, province: '浙江',
-    spots: [
-      {name:'西湖',lat:30.248,lng:120.142,indoor:false,type:'view',desc:'免费，苏堤+白堤+断桥',time:'3h'},
-      {name:'灵隐寺',lat:30.243,lng:120.099,indoor:true,type:'view',desc:'¥75，千年古刹',time:'2h'},
-      {name:'雷峰塔',lat:30.234,lng:120.147,indoor:true,type:'view',desc:'¥40，西湖全景+白蛇传说',time:'1.5h'},
-      {name:'河坊街',lat:30.242,lng:120.170,indoor:false,type:'view',desc:'南宋古街+小吃',time:'1.5h'},
-      {name:'西溪湿地',lat:30.266,lng:120.067,indoor:false,type:'view',desc:'¥80，城市湿地',time:'3h'},
-      {name:'楼外楼',lat:30.248,lng:120.139,indoor:true,type:'food',desc:'西湖醋鱼+东坡肉 ¥150',time:'1h'},
-      {name:'知味观',lat:30.244,lng:120.166,indoor:true,type:'food',desc:'猫耳朵+小笼 ¥50',time:'0.5h'},
-    ],
-    station: {name:'杭州站',lat:30.246,lng:120.182},
-  },
-  '成都': {
-    center: [104.066, 30.573], zoom: 13, province: '四川',
-    spots: [
-      {name:'宽窄巷子',lat:30.668,lng:104.056,indoor:false,type:'view',desc:'免费，清朝古街+文创',time:'1.5h'},
-      {name:'锦里',lat:30.649,lng:104.048,indoor:false,type:'view',desc:'免费，三国主题古街',time:'1.5h'},
-      {name:'武侯祠',lat:30.648,lng:104.047,indoor:false,type:'view',desc:'¥50，三国圣地',time:'2h'},
-      {name:'大熊猫基地',lat:30.735,lng:104.145,indoor:false,type:'view',desc:'¥55，超近距离看熊猫',time:'3h'},
-      {name:'杜甫草堂',lat:30.663,lng:104.029,indoor:false,type:'view',desc:'¥50，诗圣故居',time:'1.5h'},
-      {name:'春熙路',lat:30.656,lng:104.082,indoor:false,type:'view',desc:'成都最繁华商圈',time:'1h'},
-      {name:'小龙坎火锅',lat:30.655,lng:104.080,indoor:true,type:'food',desc:'牛油火锅 ¥100',time:'1.5h'},
-      {name:'洞子口张老二凉粉',lat:30.669,lng:104.055,indoor:true,type:'food',desc:'甜水面+凉粉 ¥20',time:'0.5h'},
-    ],
-    station: {name:'成都站',lat:30.699,lng:104.074},
-  },
-  '广州': {
-    center: [113.264, 23.129], zoom: 13, province: '广东',
-    spots: [
-      {name:'广州塔',lat:23.106,lng:113.324,indoor:true,type:'view',desc:'¥150，433m观光层',time:'2h'},
-      {name:'陈家祠',lat:23.129,lng:113.246,indoor:true,type:'view',desc:'¥10，岭南建筑巅峰',time:'1.5h'},
-      {name:'沙面',lat:23.110,lng:113.243,indoor:false,type:'view',desc:'免费，欧陆风情岛',time:'1.5h'},
-      {name:'白云山',lat:23.164,lng:113.293,indoor:false,type:'view',desc:'¥5，羊城第一秀',time:'3h'},
-      {name:'北京路步行街',lat:23.125,lng:113.270,indoor:false,type:'view',desc:'千年古道遗址',time:'1.5h'},
-      {name:'上下九',lat:23.119,lng:113.244,indoor:false,type:'view',desc:'骑楼+西关风情',time:'1h'},
-      {name:'陶陶居',lat:23.118,lng:113.245,indoor:true,type:'food',desc:'早茶点心 ¥80',time:'1h'},
-      {name:'银记肠粉',lat:23.126,lng:113.268,indoor:true,type:'food',desc:'鲜虾肠粉 ¥25',time:'0.5h'},
-    ],
-    station: {name:'广州站',lat:23.152,lng:113.253},
-  },
-  '西安': {
-    center: [108.940, 34.260], zoom: 13, province: '陕西',
-    spots: [
-      {name:'兵马俑',lat:34.385,lng:109.273,indoor:true,type:'view',desc:'¥120，世界第八大奇迹',time:'3h'},
-      {name:'大雁塔',lat:34.219,lng:108.963,indoor:false,type:'view',desc:'¥50，大唐不夜城旁',time:'2h'},
-      {name:'回民街',lat:34.263,lng:108.941,indoor:false,type:'view',desc:'免费，西安小吃天堂',time:'1.5h'},
-      {name:'城墙',lat:34.259,lng:108.946,indoor:false,type:'view',desc:'¥54，骑行13.7km',time:'2h'},
-      {name:'陕西历史博物馆',lat:34.217,lng:108.952,indoor:true,type:'view',desc:'免费需预约',time:'2.5h'},
-      {name:'老孙家泡馍',lat:34.264,lng:108.940,indoor:true,type:'food',desc:'羊肉泡馍 ¥45',time:'0.5h'},
-    ],
-    station: {name:'西安站',lat:34.279,lng:108.962},
-  },
-  '重庆': {
-    center: [106.551, 29.563], zoom: 13, province: '重庆',
-    spots: [
-      {name:'洪崖洞',lat:29.565,lng:106.583,indoor:true,type:'view',desc:'免费，千与千寻同款夜景',time:'1.5h'},
-      {name:'解放碑',lat:29.561,lng:106.577,indoor:false,type:'view',desc:'免费，重庆地标+商圈',time:'1h'},
-      {name:'磁器口',lat:29.582,lng:106.452,indoor:false,type:'view',desc:'免费，千年古镇',time:'2h'},
-      {name:'李子坝轻轨',lat:29.553,lng:106.535,indoor:false,type:'view',desc:'免费，轻轨穿楼奇观',time:'0.5h'},
-      {name:'长江索道',lat:29.560,lng:106.583,indoor:false,type:'view',desc:'¥20，山城空中走廊',time:'0.5h'},
-      {name:'洞亭火锅',lat:29.562,lng:106.578,indoor:true,type:'food',desc:'防空洞火锅 ¥80',time:'1.5h'},
-      {name:'花市豌杂面',lat:29.562,lng:106.576,indoor:true,type:'food',desc:'豌杂面 ¥15',time:'0.5h'},
-    ],
-    station: {name:'重庆站',lat:29.555,lng:106.565},
-  },
-  '南京': {
-    center: [118.796, 32.060], zoom: 13, province: '江苏',
-    spots: [
-      {name:'中山陵',lat:32.064,lng:118.848,indoor:false,type:'view',desc:'免费需预约，392级台阶',time:'2.5h'},
-      {name:'夫子庙',lat:32.022,lng:118.789,indoor:false,type:'view',desc:'免费，秦淮河+科举博物馆',time:'2h'},
-      {name:'南京博物院',lat:32.043,lng:118.820,indoor:true,type:'view',desc:'免费需预约，民国馆',time:'2h'},
-      {name:'总统府',lat:32.046,lng:118.792,indoor:true,type:'view',desc:'¥40，近代历史遗址',time:'2h'},
-      {name:'玄武湖',lat:32.072,lng:118.796,indoor:false,type:'view',desc:'免费，城市湖泊公园',time:'1.5h'},
-      {name:'南京大排档',lat:32.024,lng:118.788,indoor:true,type:'food',desc:'盐水鸭+美龄粥 ¥70',time:'1h'},
-    ],
-    station: {name:'南京站',lat:32.089,lng:118.796},
-  },
-  '厦门': {
-    center: [118.089, 24.480], zoom: 13, province: '福建',
-    spots: [
-      {name:'鼓浪屿',lat:24.448,lng:118.068,indoor:false,type:'view',desc:'船票¥35，万国建筑+日光岩',time:'5h'},
-      {name:'南普陀寺',lat:24.443,lng:118.091,indoor:true,type:'view',desc:'免费，闽南佛教圣地',time:'1.5h'},
-      {name:'曾厝垵',lat:24.436,lng:118.108,indoor:false,type:'view',desc:'免费，文艺渔村',time:'2h'},
-      {name:'中山路步行街',lat:24.452,lng:118.084,indoor:false,type:'view',desc:'免费，骑楼商业街',time:'1.5h'},
-      {name:'环岛路',lat:24.435,lng:118.112,indoor:false,type:'view',desc:'免费，海滨骑行',time:'2h'},
-      {name:'乌糖沙茶面',lat:24.442,lng:118.095,indoor:true,type:'food',desc:'沙茶面 ¥30',time:'0.5h'},
-    ],
-    station: {name:'厦门站',lat:24.471,lng:118.113},
-  },
-  '武汉': {
-    center: [114.305, 30.593], zoom: 13, province: '湖北',
-    spots: [
-      {name:'黄鹤楼',lat:30.547,lng:114.300,indoor:true,type:'view',desc:'¥70，天下江山第一楼',time:'2h'},
-      {name:'东湖',lat:30.556,lng:114.373,indoor:false,type:'view',desc:'免费，中国最大城中湖',time:'3h'},
-      {name:'湖北省博物馆',lat:30.564,lng:114.365,indoor:true,type:'view',desc:'免费需预约，曾侯乙编钟',time:'2h'},
-      {name:'户部巷',lat:30.546,lng:114.298,indoor:false,type:'view',desc:'汉味小吃第一巷',time:'1h'},
-      {name:'江汉路步行街',lat:30.582,lng:114.287,indoor:false,type:'view',desc:'百年商业老街',time:'1.5h'},
-      {name:'蔡林记热干面',lat:30.545,lng:114.297,indoor:true,type:'food',desc:'热干面+蛋酒 ¥15',time:'0.5h'},
-    ],
-    station: {name:'武汉站',lat:30.609,lng:114.424},
-  },
-  '深圳': {
-    center: [114.058, 22.543], zoom: 13, province: '广东',
-    spots: [
-      {name:'世界之窗',lat:22.537,lng:113.973,indoor:false,type:'view',desc:'¥220，世界地标微缩',time:'4h'},
-      {name:'深圳湾公园',lat:22.519,lng:113.952,indoor:false,type:'view',desc:'免费，海滨栈道',time:'2h'},
-      {name:'华侨城创意园',lat:22.541,lng:113.983,indoor:true,type:'view',desc:'免费，文艺+设计',time:'2h'},
-      {name:'华强北',lat:22.545,lng:114.088,indoor:true,type:'view',desc:'中国电子第一街',time:'2h'},
-      {name:'大梅沙',lat:22.594,lng:114.307,indoor:false,type:'view',desc:'免费，海滨沙滩',time:'3h'},
-      {name:'润园四季椰子鸡',lat:22.538,lng:114.058,indoor:true,type:'food',desc:'椰子鸡火锅 ¥80',time:'1h'},
-    ],
-    station: {name:'深圳站',lat:22.535,lng:114.117},
-  },
+  '长沙':{center:[112.977,28.200],zoom:14,province:'湖南',spots:[{name:'橘子洲头',lat:28.1831,lng:112.956,indoor:false,type:'view',desc:'毛爷爷雕像，观光小火车¥40',time:'2h'},{name:'岳麓山',lat:28.1885,lng:112.943,indoor:false,type:'view',desc:'缆车¥30，岳麓书院¥40，爱晚亭',time:'3h'},{name:'湖南博物院',lat:28.2105,lng:112.987,indoor:true,type:'view',desc:'马王堆汉墓，辛追夫人，免费需预约',time:'2.5h'},{name:'IFS国金中心',lat:28.1975,lng:112.9735,indoor:true,type:'view',desc:'KAWS打卡，购物避雨',time:'1.5h'},{name:'超级文和友',lat:28.192,lng:112.972,indoor:true,type:'view',desc:'80年代老长沙沉浸空间',time:'1.5h'},{name:'古开福寺',lat:28.2155,lng:112.9815,indoor:true,type:'view',desc:'千年古刹¥10，送三炷香',time:'1h'},{name:'太平老街',lat:28.1935,lng:112.9705,indoor:false,type:'view',desc:'千年古街，小吃+贾谊故居',time:'1h'},{name:'杜甫江阁',lat:28.1895,lng:112.9685,indoor:false,type:'view',desc:'湘江夜景，路边乐队',time:'0.5h'},{name:'黄兴路步行街',lat:28.1935,lng:112.974,indoor:false,type:'view',desc:'3D大屏，霓虹夜景',time:'1h'},{name:'潮宗街',lat:28.2025,lng:112.975,indoor:false,type:'view',desc:'明清老街+民国建筑+咖啡馆',time:'1h'},{name:'都正街',lat:28.1905,lng:112.9775,indoor:false,type:'view',desc:'南门口网红小吃街',time:'0.5h'},{name:'笨萝卜浏阳菜馆',lat:28.195,lng:112.975,indoor:true,type:'food',desc:'酸菜炒粉皮+金钱蛋 ¥50',time:'1h'},{name:'聚味瞿记',lat:28.194,lng:112.973,indoor:true,type:'food',desc:'口味虾+蒜蓉虾 ¥120',time:'1h'},{name:'公交新村粉店',lat:28.186,lng:112.979,indoor:true,type:'food',desc:'牛肉粉+雪里蕻 ¥15',time:'0.5h'}],station:{name:'长沙站',lat:28.195,lng:112.9987}},
+  '北京':{center:[116.407,39.904],zoom:13,province:'北京',spots:[{name:'故宫',lat:39.916,lng:116.397,indoor:false,type:'view',desc:'¥60需预约，中轴线穿越',time:'3h'},{name:'颐和园',lat:39.999,lng:116.275,indoor:false,type:'view',desc:'¥30，皇家园林',time:'3h'},{name:'国家博物馆',lat:39.905,lng:116.401,indoor:true,type:'view',desc:'免费需预约，地下一层古代中国',time:'2.5h'},{name:'南锣鼓巷',lat:39.938,lng:116.403,indoor:false,type:'view',desc:'胡同+文创小店',time:'1.5h'},{name:'798艺术区',lat:39.984,lng:116.495,indoor:true,type:'view',desc:'免费，当代艺术画廊',time:'2h'},{name:'什刹海',lat:39.937,lng:116.387,indoor:false,type:'view',desc:'免费，胡同游+酒吧街',time:'1.5h'},{name:'全聚德',lat:39.899,lng:116.411,indoor:true,type:'food',desc:'烤鸭 ¥200',time:'1.5h'},{name:'簋街',lat:39.938,lng:116.427,indoor:false,type:'food',desc:'麻辣小龙虾一条街 ¥100',time:'1h'}],station:{name:'北京站',lat:39.905,lng:116.427}},
+  '上海':{center:[121.473,31.230],zoom:13,province:'上海',spots:[{name:'外滩',lat:31.240,lng:121.490,indoor:false,type:'view',desc:'免费，万国建筑群+陆家嘴夜景',time:'1.5h'},{name:'东方明珠',lat:31.240,lng:121.500,indoor:true,type:'view',desc:'¥199，俯瞰浦江',time:'2h'},{name:'豫园',lat:31.228,lng:121.492,indoor:false,type:'view',desc:'¥40，明代园林+城隍庙小吃',time:'2h'},{name:'上海博物馆',lat:31.230,lng:121.476,indoor:true,type:'view',desc:'免费，青铜器+书画',time:'2h'},{name:'田子坊',lat:31.210,lng:121.470,indoor:false,type:'view',desc:'石库门里弄+创意小店',time:'1.5h'},{name:'迪士尼',lat:31.144,lng:121.660,indoor:false,type:'view',desc:'¥475起，全天沉浸',time:'8h'},{name:'小杨生煎',lat:31.229,lng:121.482,indoor:true,type:'food',desc:'生煎包 ¥25',time:'0.5h'}],station:{name:'上海站',lat:31.253,lng:121.455}},
+  '杭州':{center:[120.155,30.274],zoom:13,province:'浙江',spots:[{name:'西湖',lat:30.248,lng:120.142,indoor:false,type:'view',desc:'免费，苏堤+白堤+断桥',time:'3h'},{name:'灵隐寺',lat:30.243,lng:120.099,indoor:true,type:'view',desc:'¥75，千年古刹',time:'2h'},{name:'雷峰塔',lat:30.234,lng:120.147,indoor:true,type:'view',desc:'¥40，西湖全景',time:'1.5h'},{name:'河坊街',lat:30.242,lng:120.170,indoor:false,type:'view',desc:'南宋古街+小吃',time:'1.5h'},{name:'西溪湿地',lat:30.266,lng:120.067,indoor:false,type:'view',desc:'¥80，城市湿地',time:'3h'},{name:'楼外楼',lat:30.248,lng:120.139,indoor:true,type:'food',desc:'西湖醋鱼+东坡肉 ¥150',time:'1h'}],station:{name:'杭州站',lat:30.246,lng:120.182}},
+  '成都':{center:[104.066,30.573],zoom:13,province:'四川',spots:[{name:'宽窄巷子',lat:30.668,lng:104.056,indoor:false,type:'view',desc:'免费，清朝古街+文创',time:'1.5h'},{name:'武侯祠',lat:30.648,lng:104.047,indoor:false,type:'view',desc:'¥50，三国圣地',time:'2h'},{name:'大熊猫基地',lat:30.735,lng:104.145,indoor:false,type:'view',desc:'¥55，超近距离看熊猫',time:'3h'},{name:'杜甫草堂',lat:30.663,lng:104.029,indoor:false,type:'view',desc:'¥50，诗圣故居',time:'1.5h'},{name:'春熙路',lat:30.656,lng:104.082,indoor:false,type:'view',desc:'最繁华商圈',time:'1h'},{name:'小龙坎火锅',lat:30.655,lng:104.080,indoor:true,type:'food',desc:'牛油火锅 ¥100',time:'1.5h'}],station:{name:'成都站',lat:30.699,lng:104.074}},
+  '广州':{center:[113.264,23.129],zoom:13,province:'广东',spots:[{name:'广州塔',lat:23.106,lng:113.324,indoor:true,type:'view',desc:'¥150，433m观光层',time:'2h'},{name:'陈家祠',lat:23.129,lng:113.246,indoor:true,type:'view',desc:'¥10，岭南建筑巅峰',time:'1.5h'},{name:'沙面',lat:23.110,lng:113.243,indoor:false,type:'view',desc:'免费，欧陆风情岛',time:'1.5h'},{name:'白云山',lat:23.164,lng:113.293,indoor:false,type:'view',desc:'¥5，羊城第一秀',time:'3h'},{name:'北京路步行街',lat:23.125,lng:113.270,indoor:false,type:'view',desc:'千年古道遗址',time:'1.5h'},{name:'陶陶居',lat:23.118,lng:113.245,indoor:true,type:'food',desc:'早茶点心 ¥80',time:'1h'}],station:{name:'广州站',lat:23.152,lng:113.253}},
+  '西安':{center:[108.940,34.260],zoom:13,province:'陕西',spots:[{name:'兵马俑',lat:34.385,lng:109.273,indoor:true,type:'view',desc:'¥120，世界第八大奇迹',time:'3h'},{name:'大雁塔',lat:34.219,lng:108.963,indoor:false,type:'view',desc:'¥50，大唐不夜城旁',time:'2h'},{name:'回民街',lat:34.263,lng:108.941,indoor:false,type:'view',desc:'免费，西安小吃天堂',time:'1.5h'},{name:'城墙',lat:34.259,lng:108.946,indoor:false,type:'view',desc:'¥54，骑行13.7km',time:'2h'},{name:'陕西历史博物馆',lat:34.217,lng:108.952,indoor:true,type:'view',desc:'免费需预约',time:'2.5h'},{name:'老孙家泡馍',lat:34.264,lng:108.940,indoor:true,type:'food',desc:'羊肉泡馍 ¥45',time:'0.5h'}],station:{name:'西安站',lat:34.279,lng:108.962}},
+  '重庆':{center:[106.551,29.563],zoom:13,province:'重庆',spots:[{name:'洪崖洞',lat:29.565,lng:106.583,indoor:true,type:'view',desc:'免费，千与千寻同款夜景',time:'1.5h'},{name:'磁器口',lat:29.582,lng:106.452,indoor:false,type:'view',desc:'免费，千年古镇',time:'2h'},{name:'李子坝轻轨',lat:29.553,lng:106.535,indoor:false,type:'view',desc:'免费，轻轨穿楼奇观',time:'0.5h'},{name:'长江索道',lat:29.560,lng:106.583,indoor:false,type:'view',desc:'¥20，山城空中走廊',time:'0.5h'},{name:'洞亭火锅',lat:29.562,lng:106.578,indoor:true,type:'food',desc:'防空洞火锅 ¥80',time:'1.5h'},{name:'花市豌杂面',lat:29.562,lng:106.576,indoor:true,type:'food',desc:'豌杂面 ¥15',time:'0.5h'}],station:{name:'重庆站',lat:29.555,lng:106.565}},
+  '南京':{center:[118.796,32.060],zoom:13,province:'江苏',spots:[{name:'中山陵',lat:32.064,lng:118.848,indoor:false,type:'view',desc:'免费需预约，392级台阶',time:'2.5h'},{name:'夫子庙',lat:32.022,lng:118.789,indoor:false,type:'view',desc:'免费，秦淮河',time:'2h'},{name:'南京博物院',lat:32.043,lng:118.820,indoor:true,type:'view',desc:'免费需预约，民国馆',time:'2h'},{name:'总统府',lat:32.046,lng:118.792,indoor:true,type:'view',desc:'¥40，近代历史遗址',time:'2h'},{name:'南京大排档',lat:32.024,lng:118.788,indoor:true,type:'food',desc:'盐水鸭+美龄粥 ¥70',time:'1h'}],station:{name:'南京站',lat:32.089,lng:118.796}},
+  '厦门':{center:[118.089,24.480],zoom:13,province:'福建',spots:[{name:'鼓浪屿',lat:24.448,lng:118.068,indoor:false,type:'view',desc:'船票¥35，万国建筑',time:'5h'},{name:'南普陀寺',lat:24.443,lng:118.091,indoor:true,type:'view',desc:'免费，闽南佛教圣地',time:'1.5h'},{name:'曾厝垵',lat:24.436,lng:118.108,indoor:false,type:'view',desc:'免费，文艺渔村',time:'2h'},{name:'环岛路',lat:24.435,lng:118.112,indoor:false,type:'view',desc:'免费，海滨骑行',time:'2h'},{name:'乌糖沙茶面',lat:24.442,lng:118.095,indoor:true,type:'food',desc:'沙茶面 ¥30',time:'0.5h'}],station:{name:'厦门站',lat:24.471,lng:118.113}},
+  '武汉':{center:[114.305,30.593],zoom:13,province:'湖北',spots:[{name:'黄鹤楼',lat:30.547,lng:114.300,indoor:true,type:'view',desc:'¥70，天下江山第一楼',time:'2h'},{name:'东湖',lat:30.556,lng:114.373,indoor:false,type:'view',desc:'免费，中国最大城中湖',time:'3h'},{name:'湖北省博物馆',lat:30.564,lng:114.365,indoor:true,type:'view',desc:'免费需预约，曾侯乙编钟',time:'2h'},{name:'户部巷',lat:30.546,lng:114.298,indoor:false,type:'view',desc:'汉味小吃第一巷',time:'1h'},{name:'蔡林记热干面',lat:30.545,lng:114.297,indoor:true,type:'food',desc:'热干面+蛋酒 ¥15',time:'0.5h'}],station:{name:'武汉站',lat:30.609,lng:114.424}},
+  '深圳':{center:[114.058,22.543],zoom:13,province:'广东',spots:[{name:'世界之窗',lat:22.537,lng:113.973,indoor:false,type:'view',desc:'¥220，世界地标微缩',time:'4h'},{name:'深圳湾公园',lat:22.519,lng:113.952,indoor:false,type:'view',desc:'免费，海滨栈道',time:'2h'},{name:'华侨城创意园',lat:22.541,lng:113.983,indoor:true,type:'view',desc:'免费，文艺+设计',time:'2h'},{name:'大梅沙',lat:22.594,lng:114.307,indoor:false,type:'view',desc:'免费，海滨沙滩',time:'3h'},{name:'润园四季椰子鸡',lat:22.538,lng:114.058,indoor:true,type:'food',desc:'椰子鸡火锅 ¥80',time:'1h'}],station:{name:'深圳站',lat:22.535,lng:114.117}},
+  '衡阳':{center:[112.615,26.895],zoom:13,province:'湖南',spots:[{name:'石鼓书院',lat:26.904,lng:112.607,indoor:false,type:'view',desc:'免费，中国四大书院之首',time:'1h'},{name:'东洲岛',lat:26.882,lng:112.623,indoor:false,type:'view',desc:'湘江绿岛',time:'1.5h'},{name:'南岳衡山',lat:27.235,lng:112.742,indoor:false,type:'view',desc:'五岳之一¥58',time:'5h'},{name:'草桥鱼粉',lat:26.905,lng:112.607,indoor:true,type:'food',desc:'非遗鱼骨汤粉 ¥15',time:'0.5h'}],station:{name:'衡阳站',lat:26.893,lng:112.619}},
 };
 
 // ============================================================
-//  WEATHER API — Open-Meteo (free, no key, CORS enabled)
+//  AI SETTINGS (localStorage)
 // ============================================================
-var WMO_CODES = {
-  0:'☀️ 晴',1:'🌤 少云',2:'⛅ 多云',3:'☁️ 阴',
-  45:'🌫 雾',48:'🌫 雾凇',
-  51:'🌧 小毛毛雨',53:'🌧 毛毛雨',55:'🌧 大毛毛雨',
-  61:'🌧 小雨',63:'🌧 中雨',65:'🌧 大雨',
-  71:'❄️ 小雪',73:'❄️ 中雪',75:'❄️ 大雪',
-  80:'🌧 阵雨',81:'🌧 中阵雨',82:'🌧 大阵雨',
-  95:'⛈ 雷暴',96:'⛈ 雷暴+冰雹',99:'⛈ 强雷暴+冰雹'
-};
+var AI_ENABLED = localStorage.getItem('tp_ai_enabled') === 'true';
+var AI_ENDPOINT = localStorage.getItem('tp_ai_endpoint') || 'https://api.deepseek.com/v1/chat/completions';
+var AI_KEY = localStorage.getItem('tp_ai_key') || '';
+var AI_MODEL = localStorage.getItem('tp_ai_model') || 'deepseek-chat';
+
+function restoreAISettings() {
+  document.getElementById('aiEndpoint').value = AI_ENDPOINT;
+  document.getElementById('aiKey').value = AI_KEY;
+  document.getElementById('aiModel').value = AI_MODEL;
+  if (AI_ENABLED) {
+    document.getElementById('btnAI').classList.add('on');
+    document.getElementById('btnAI').textContent = '🤖 AI 开';
+    document.getElementById('aiSettings').classList.add('show');
+    document.getElementById('genMode').textContent = 'AI 模式 · 支持任意城市';
+  }
+}
+
+function toggleAI() {
+  AI_ENABLED = !AI_ENABLED;
+  localStorage.setItem('tp_ai_enabled', AI_ENABLED);
+  var btn = document.getElementById('btnAI');
+  var panel = document.getElementById('aiSettings');
+  var mode = document.getElementById('genMode');
+  if (AI_ENABLED) {
+    btn.classList.add('on'); btn.textContent = '🤖 AI 开';
+    panel.classList.add('show');
+    mode.textContent = 'AI 模式 · 支持任意城市';
+  } else {
+    btn.classList.remove('on'); btn.textContent = '🤖 AI';
+    panel.classList.remove('show');
+    mode.textContent = '离线模式 · 12个预设城市';
+  }
+}
+
+function saveAISettings() {
+  AI_ENDPOINT = document.getElementById('aiEndpoint').value.trim();
+  AI_KEY = document.getElementById('aiKey').value.trim();
+  AI_MODEL = document.getElementById('aiModel').value.trim();
+  localStorage.setItem('tp_ai_endpoint', AI_ENDPOINT);
+  localStorage.setItem('tp_ai_key', AI_KEY);
+  localStorage.setItem('tp_ai_model', AI_MODEL);
+  toast('AI 设置已保存');
+}
+
+// ============================================================
+//  WEATHER — Open-Meteo (free, no key, CORS enabled)
+// ============================================================
+var WMO_CODES = {0:'☀️ 晴',1:'🌤 少云',2:'⛅ 多云',3:'☁️ 阴',45:'🌫 雾',48:'🌫 雾凇',51:'🌧 毛毛雨',53:'🌧 毛毛雨',55:'🌧 毛毛雨',61:'🌧 小雨',63:'🌧 中雨',65:'🌧 大雨',71:'❄️ 小雪',73:'❄️ 中雪',75:'❄️ 大雪',80:'🌧 阵雨',81:'🌧 阵雨',82:'🌧 阵雨',95:'⛈ 雷暴',96:'⛈ 雷暴+冰雹',99:'⛈ 强雷暴'};
 
 function fetchWeather(lat, lng, startDate, days) {
-  var endDate = new Date(startDate);
-  endDate.setDate(endDate.getDate() + days - 1);
+  var endDate = new Date(startDate); endDate.setDate(endDate.getDate() + days - 1);
   var sd = startDate.toISOString().split('T')[0];
   var ed = endDate.toISOString().split('T')[0];
-  var url = 'https://api.open-meteo.com/v1/forecast?latitude=' + lat + '&longitude=' + lng
-    + '&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum'
-    + '&start_date=' + sd + '&end_date=' + ed + '&timezone=Asia/Shanghai';
-  return fetch(url).then(function(r) { return r.json(); }).then(function(data) {
-    var daily = data.daily;
-    var result = [];
-    for (var i = 0; i < daily.time.length; i++) {
-      result.push({
-        date: daily.time[i],
-        weatherCode: daily.weathercode[i],
-        weatherDesc: WMO_CODES[daily.weathercode[i]] || '未知',
-        tempMax: Math.round(daily.temperature_2m_max[i]),
-        tempMin: Math.round(daily.temperature_2m_min[i]),
-        precip: daily.precipitation_sum[i] || 0,
-        isRainy: (daily.weathercode[i] >= 50 && daily.weathercode[i] < 90) || daily.weathercode[i] >= 95,
-      });
-    }
+  var url = 'https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lng+'&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum&start_date='+sd+'&end_date='+ed+'&timezone=Asia/Shanghai';
+  return fetch(url).then(function(r){return r.json();}).then(function(data){
+    var daily = data.daily; var result = [];
+    for (var i=0;i<daily.time.length;i++) { result.push({date:daily.time[i],weatherCode:daily.weathercode[i],weatherDesc:WMO_CODES[daily.weathercode[i]]||'未知',tempMax:Math.round(daily.temperature_2m_max[i]),tempMin:Math.round(daily.temperature_2m_min[i]),precip:daily.precipitation_sum[i]||0,isRainy:(daily.weathercode[i]>=50&&daily.weathercode[i]<90)||daily.weathercode[i]>=95}); }
     return result;
   });
 }
 
 // ============================================================
-//  PLAN GENERATOR — Rule-based itinerary generation
+//  AI PLAN GENERATOR
+// ============================================================
+function buildAIPrompt(city, days, style, budget, people, startDate, weatherData) {
+  var weatherStr = weatherData.map(function(w,i){
+    var d = new Date(startDate); d.setDate(d.getDate()+i);
+    return (d.getMonth()+1)+'/'+d.getDate()+' '+w.weatherDesc+' '+w.tempMin+'~'+w.tempMax+'°C'+(w.isRainy?' 有雨':' 无雨');
+  }).join('；');
+  var styleDesc = {packed:'行程紧凑，每天安排6-8个点',moderate:'节奏适中，每天4-5个点',relaxed:'悠闲慢游，每天3-4个点'};
+  var budgetDesc = {budget:'经济实惠，推荐性价比高的餐厅和免费景点',mid:'中档消费，兼顾品质和价格',luxury:'轻奢享受，推荐高档餐厅和精品体验'};
+  return '你是专业旅行规划师。为中国城市'+city+'做'+days+'天旅行计划。\n出发日期：'+startDate.toISOString().split('T')[0]+'。人数：'+people+'人。\n风格：'+styleDesc[style]+'。\n预算：'+budgetDesc[budget]+'。\n天气预报：'+weatherStr+'。\n\n请输出JSON（不要markdown代码块，只要纯JSON）：\n{"cityCenter":[lng,lat],"days":[{"stops":[{"name":"地点名","time":"08:00","lng":112.123,"lat":28.456,"icon":"🏞","note":"简介+票价","type":"view"},{"name":"餐厅名","time":"12:00","lng":112.234,"lat":28.567,"icon":"🍜","note":"推荐菜+人均","type":"food"}],"segments":[{"from":0,"to":1,"mode":"walk","desc":"步行约10分钟"}]}]}\n\n规则：1)坐标用GCJ-02（高德坐标系），必须精确到小数点后4位 2)mode只能是walk/taxi/metro/train之一 3)每天至少3个view+1个food 4)下雨天优先室内景点 5)景点之间路程合理 6)只输出JSON，不要解释';
+}
+
+function callAI(prompt) {
+  return fetch(AI_ENDPOINT, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + AI_KEY},
+    body: JSON.stringify({model: AI_MODEL, messages: [{role: 'user', content: prompt}], temperature: 0.7, max_tokens: 4096})
+  }).then(function(r){ if(!r.ok) throw new Error('API error: '+r.status); return r.json(); })
+  .then(function(data){ return data.choices[0].message.content; });
+}
+
+function parseAIResponse(text) {
+  // Strip markdown code blocks if present
+  var json = text.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim();
+  var firstBrace = json.indexOf('{');
+  var lastBrace = json.lastIndexOf('}');
+  if (firstBrace >= 0 && lastBrace > firstBrace) json = json.substring(firstBrace, lastBrace+1);
+  return JSON.parse(json);
+}
+
+// ============================================================
+//  PLAN GENERATOR — Orchestrator
 // ============================================================
 function generatePlan() {
   var cityName = document.getElementById('fCity').value.trim();
@@ -365,147 +260,115 @@ function generatePlan() {
   var style = document.getElementById('fStyle').value;
   var budget = document.getElementById('fBudget').value;
   var people = parseInt(document.getElementById('fPeople').value);
-
   if (!cityName) { toast('请输入城市名称'); return; }
   if (isNaN(startDate.getTime())) { toast('请选择有效日期'); return; }
 
-  // Find city
+  // Find city in DB for base coords
   var city = CITY_DB[cityName];
+  var matchedCity = cityName;
   if (!city) {
     var keys = Object.keys(CITY_DB);
-    var match = keys.find(function(k) { return k.indexOf(cityName) >= 0 || cityName.indexOf(k) >= 0; });
-    if (match) { city = CITY_DB[match]; cityName = match; }
-    else { toast('暂不支持该城市，已支持：' + keys.join('、')); return; }
+    var m = keys.find(function(k){return k.indexOf(cityName)>=0||cityName.indexOf(k)>=0;});
+    if (m) { city = CITY_DB[m]; matchedCity = m; }
   }
+  // Default center if city unknown
+  var center = city ? city.center : [116.407, 39.904];
+  var zoom = city ? city.zoom : 12;
 
-  document.getElementById('emptyState').style.display = 'none';
-  document.getElementById('planContent').style.display = 'none';
-  document.getElementById('loadingState').style.display = 'flex';
-  document.getElementById('loadingText').textContent = '正在获取' + cityName + '天气…';
+  showLoading('正在获取天气…');
 
-  fetchWeather(city.center[1], city.center[0], startDate, days).then(function(weatherData) {
-    document.getElementById('loadingText').textContent = '正在生成行程…';
-    var plan = buildPlan(city, cityName, weatherData, style, budget, people, startDate);
-    document.getElementById('loadingState').style.display = 'none';
-    document.getElementById('planContent').style.display = 'block';
-    document.getElementById('legend').style.display = 'block';
-    renderPlan(plan);
-    renderAllDaysOnMap(plan);
-    toast('计划生成完成！点击路段可在高德地图查看导航路线');
-  }).catch(function(err) {
-    console.error('Weather fetch failed:', err);
-    document.getElementById('loadingText').textContent = '天气获取失败，使用默认天气生成…';
-    // Fallback: generate with dummy weather
-    var dummyWeather = [];
-    for (var i = 0; i < days; i++) {
-      var d = new Date(startDate); d.setDate(d.getDate() + i);
-      dummyWeather.push({date:d.toISOString().split('T')[0],weatherCode:1,weatherDesc:'少云',tempMax:28,tempMin:20,precip:0,isRainy:false});
+  fetchWeather(center[1], center[0], startDate, days).then(function(weatherData) {
+    if (AI_ENABLED && AI_KEY) {
+      showLoading('AI 正在搜索和分析 ' + matchedCity + ' 的旅游信息…');
+      var prompt = buildAIPrompt(matchedCity, days, style, budget, people, startDate, weatherData);
+      return callAI(prompt).then(function(text) {
+        var aiPlan = parseAIResponse(text);
+        // Merge AI plan with weather data
+        return buildPlanFromAI(aiPlan, weatherData, matchedCity, style, budget, people, startDate);
+      }).catch(function(err) {
+        console.error('AI failed:', err);
+        toast('AI 调用失败（' + err.message + '），回退到离线模式');
+        if (city) return buildPlanOffline(city, matchedCity, weatherData, style, budget, people, startDate);
+        throw new Error('该城市无离线数据，请检查 API 设置');
+      });
+    } else {
+      if (!city) { toast('该城市不在离线数据库中，请开启 AI 模式'); throw new Error('No data'); }
+      return Promise.resolve(buildPlanOffline(city, matchedCity, weatherData, style, budget, people, startDate));
     }
-    var plan = buildPlan(city, cityName, dummyWeather, style, budget, people, startDate);
-    document.getElementById('loadingState').style.display = 'none';
-    document.getElementById('planContent').style.display = 'block';
-    document.getElementById('legend').style.display = 'block';
+  }).then(function(plan) {
+    hideLoading();
     renderPlan(plan);
     renderAllDaysOnMap(plan);
-    toast('计划已生成（天气数据离线，使用默认值）');
+    document.getElementById('legend').style.display = 'block';
+    var source = (plan.source === 'ai') ? 'AI 生成' : '离线数据库';
+    toast('计划生成完成！(' + source + ') 点击路段可在高德查看导航');
+  }).catch(function(err) {
+    hideLoading();
+    if (err.message !== 'No data') toast('生成失败：' + err.message);
   });
 }
 
-function buildPlan(city, cityName, weatherData, style, budget, people, startDate) {
-  var budgetMult = budget === 'luxury' ? 2.5 : budget === 'budget' ? 0.5 : 1;
-  var styleCounts = { packed: {views:6,foods:3}, moderate: {views:4,foods:2}, relaxed: {views:3,foods:2} };
-  var counts = styleCounts[style] || styleCounts.moderate;
-
-  var days = [];
-  for (var d = 0; d < weatherData.length; d++) {
-    var w = weatherData[d];
-    var date = new Date(startDate); date.setDate(date.getDate() + d);
-    var dateStr = (date.getMonth()+1) + '/' + date.getDate();
-
-    // Pick attractions: rainy → prefer indoor, sunny → prefer outdoor
-    var spots = city.spots.slice();
-    spots.sort(function(a, b) {
-      var aScore = (w.isRainy && a.indoor) ? 0 : (!w.isRainy && !a.indoor) ? 0 : 1;
-      var bScore = (w.isRainy && b.indoor) ? 0 : (!w.isRainy && !b.indoor) ? 0 : 1;
-      return aScore - bScore;
-    });
-
-    // Select attractions and foods
-    var selectedViews = [];
-    var selectedFoods = [];
-    var usedNames = {};
-    spots.forEach(function(s) {
-      if (usedNames[s.name]) return;
-      if (s.type === 'view' && selectedViews.length < counts.views) {
-        selectedViews.push(s); usedNames[s.name] = true;
-      }
-      if (s.type === 'food' && selectedFoods.length < counts.foods) {
-        selectedFoods.push(s); usedNames[s.name] = true;
-      }
-    });
-
-    // Build timeline
-    var stops = [];
-    var segs = [];
-    var times = style === 'packed' ? ['08:00','09:00','10:30','12:00','14:00','15:30','17:00','18:30','20:00']
-      : style === 'relaxed' ? ['09:00','10:30','12:00','14:30','17:00','19:00']
-      : ['08:30','10:00','11:30','12:30','14:30','16:00','18:00','20:00'];
-
-    var ti = 0;
-    var segColors = ['#e94560','#5b9bd5','#a080d0','#50d090','#f0a050'];
-
-    // Morning: 2 views
-    for (var v = 0; v < Math.min(2, selectedViews.length); v++) {
-      stops.push({name:selectedViews[v].name,lat:selectedViews[v].lat,lng:selectedViews[v].lng,
-        time:times[ti]||'09:00',icon:'🏞',note:selectedViews[v].desc,type:'view'});
-      if (v > 0) segs.push({from:stops.length-2,to:stops.length-1,mode:w.isRainy?'taxi':'walk',
-        desc:(w.isRainy?'🚕 打车':'🚶 步行')+' '+(selectedViews[v-1].name)+'→'+selectedViews[v].name});
-      ti++;
-    }
-
-    // Lunch
-    if (selectedFoods.length > 0) {
-      stops.push({name:selectedFoods[0].name,lat:selectedFoods[0].lat,lng:selectedFoods[0].lng,
-        time:style==='relaxed'?'12:00':'12:00',icon:'🍜',note:selectedFoods[0].desc,type:'food'});
-      segs.push({from:stops.length-2,to:stops.length-1,mode:w.isRainy?'taxi':'walk',
-        desc:(w.isRainy?'🚕 打车':'🚶 步行')+' 前往午餐'});
-      ti++;
-    }
-
-    // Afternoon: rest of views
-    for (var v2 = 2; v2 < selectedViews.length; v2++) {
-      var t = ti < times.length ? times[ti] : '15:00';
-      stops.push({name:selectedViews[v2].name,lat:selectedViews[v2].lat,lng:selectedViews[v2].lng,
-        time:t,icon:w.isRainy&&selectedViews[v2].indoor?'🏛':'🏞',note:selectedViews[v2].desc,type:'view'});
-      segs.push({from:stops.length-2,to:stops.length-1,mode:w.isRainy?'taxi':(style==='packed'?'walk':'metro'),
-        desc:(w.isRainy?'🚕 打车':'🚇 地铁')+' '+(stops[stops.length-2].name)+'→'+selectedViews[v2].name});
-      ti++;
-    }
-
-    // Dinner
-    if (selectedFoods.length > 1) {
-      stops.push({name:selectedFoods[1].name,lat:selectedFoods[1].lat,lng:selectedFoods[1].lng,
-        time:style==='relaxed'?'18:00':'18:00',icon:'🍜',note:selectedFoods[1].desc,type:'food'});
-      segs.push({from:stops.length-2,to:stops.length-1,mode:w.isRainy?'taxi':'walk',
-        desc:(w.isRainy?'🚕 打车':'🚶 步行')+' 前往晚餐'});
-    }
-
-    days.push({
-      dateStr: dateStr, weather: w, stops: stops, segments: segs,
-      color: segColors[d % segColors.length],
-      label: 'Day ' + (d+1) + ' · ' + dateStr + ' · ' + w.weatherDesc.split(' ')[1],
-    });
-  }
-
-  // Budget estimate
-  var dailyBase = budget === 'luxury' ? 500 : budget === 'budget' ? 150 : 280;
-  var totalBudget = dailyBase * weatherData.length * people;
-
+function buildPlanFromAI(aiPlan, weatherData, cityName, style, budget, people, startDate) {
+  var days = aiPlan.days.map(function(day, i) {
+    var w = weatherData[i] || weatherData[0];
+    return {
+      dateStr: (new Date(startDate).getMonth()+1)+'/'+(new Date(startDate).getDate()+i),
+      weather: w,
+      stops: day.stops || [],
+      segments: day.segments || [],
+      color: ['#e94560','#5b9bd5','#a080d0','#50d090','#f0a050'][i%5],
+      label: 'Day '+(i+1)+' · AI生成',
+    };
+  });
+  var db = budget==='luxury'?500:budget==='budget'?150:280;
   return {
-    cityName: cityName, days: days, city: city,
-    budget: { daily: dailyBase, total: totalBudget, perPerson: totalBudget / people, people: people },
-    startDate: startDate,
+    cityName: cityName, days: days,
+    city: {center: aiPlan.cityCenter||[116.407,39.904], zoom: 13},
+    budget: {daily:db, total:db*weatherData.length*people, perPerson:db, people:people},
+    startDate: startDate, source: 'ai'
   };
+}
+
+function buildPlanOffline(city, cityName, weatherData, style, budget, people, startDate) {
+  var bm = budget==='luxury'?2.5:budget==='budget'?0.5:1;
+  var counts = {packed:{views:6,foods:3},moderate:{views:4,foods:2},relaxed:{views:3,foods:2}};
+  var cnt = counts[style]||counts.moderate;
+  var dayColors = ['#e94560','#5b9bd5','#a080d0','#50d090','#f0a050'];
+  var times = style==='packed'?['08:00','09:00','10:30','12:00','14:00','15:30','17:00','18:30','20:00']:style==='relaxed'?['09:00','10:30','12:00','14:30','17:00','19:00']:['08:30','10:00','11:30','12:30','14:30','16:00','18:00','20:00'];
+
+  var days = weatherData.map(function(w, d) {
+    var date = new Date(startDate); date.setDate(date.getDate()+d);
+    var spots = city.spots.slice();
+    spots.sort(function(a,b){var as=w.isRainy&&a.indoor?0:!w.isRainy&&!a.indoor?0:1;var bs=w.isRainy&&b.indoor?0:!w.isRainy&&!b.indoor?0:1;return as-bs;});
+
+    var views=[], foods=[], used={};
+    spots.forEach(function(s){if(used[s.name])return;if(s.type==='view'&&views.length<cnt.views){views.push(s);used[s.name]=true;}if(s.type==='food'&&foods.length<cnt.foods){foods.push(s);used[s.name]=true;}});
+
+    var stops=[], segs=[], ti=0;
+    for (var v=0;v<Math.min(2,views.length);v++){
+      stops.push({name:views[v].name,lat:views[v].lat,lng:views[v].lng,time:times[ti]||'09:00',icon:'🏞',note:views[v].desc,type:'view'});
+      if(v>0) segs.push({from:stops.length-2,to:stops.length-1,mode:w.isRainy?'taxi':'walk',desc:(w.isRainy?'🚕 打车':'🚶 步行')+' '+stops[stops.length-2].name+'→'+views[v].name});
+      ti++;
+    }
+    if(foods.length>0){
+      stops.push({name:foods[0].name,lat:foods[0].lat,lng:foods[0].lng,time:'12:00',icon:'🍜',note:foods[0].desc,type:'food'});
+      segs.push({from:stops.length-2,to:stops.length-1,mode:w.isRainy?'taxi':'walk',desc:(w.isRainy?'🚕 打车':'🚶 步行')+' 前往午餐'});
+      ti++;
+    }
+    for (var v2=2;v2<views.length;v2++){
+      stops.push({name:views[v2].name,lat:views[v2].lat,lng:views[v2].lng,time:times[ti]||'15:00',icon:w.isRainy&&views[v2].indoor?'🏛':'🏞',note:views[v2].desc,type:'view'});
+      segs.push({from:stops.length-2,to:stops.length-1,mode:w.isRainy?'taxi':'metro',desc:(w.isRainy?'🚕 打车':'🚇 地铁')+' →'+views[v2].name});
+      ti++;
+    }
+    if(foods.length>1){
+      stops.push({name:foods[1].name,lat:foods[1].lat,lng:foods[1].lng,time:'18:00',icon:'🍜',note:foods[1].desc,type:'food'});
+      segs.push({from:stops.length-2,to:stops.length-1,mode:w.isRainy?'taxi':'walk',desc:(w.isRainy?'🚕 打车':'🚶 步行')+' 前往晚餐'});
+    }
+    return {dateStr:(date.getMonth()+1)+'/'+date.getDate(),weather:w,stops:stops,segments:segs,color:dayColors[d%5],label:'Day '+(d+1)+' · '+(date.getMonth()+1)+'/'+date.getDate()};
+  });
+
+  var db = budget==='luxury'?500:budget==='budget'?150:280;
+  return {cityName:cityName,days:days,city:city,budget:{daily:db,total:db*weatherData.length*people,perPerson:db,people:people},startDate:startDate,source:'offline'};
 }
 
 // ============================================================
@@ -513,174 +376,114 @@ function buildPlan(city, cityName, weatherData, style, budget, people, startDate
 // ============================================================
 var planRenderData = null;
 
+function showLoading(msg) {
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('planContent').style.display = 'none';
+  document.getElementById('loadingState').style.display = 'flex';
+  document.getElementById('loadingText').textContent = msg;
+}
+function hideLoading() {
+  document.getElementById('loadingState').style.display = 'none';
+  document.getElementById('planContent').style.display = 'block';
+}
+
 function renderPlan(plan) {
   planRenderData = plan;
   var panel = document.getElementById('planContent');
-  var html = '<div class="plan-title">' + plan.cityName + ' — ' + plan.days.length + '日行程</div>';
-  html += '<div class="plan-subtitle">' + plan.startDate.toISOString().split('T')[0] + ' 出发 · '
-    + plan.budget.people + '人 · 预估¥' + plan.budget.total + '（人均¥' + plan.budget.perPerson + '/日）</div>';
+  var total = plan.budget.total;
+  var pp = plan.budget.perPerson;
+  var html = '<div class="plan-title">' + plan.cityName + ' — ' + plan.days.length + '日行程';
+  if (plan.source === 'ai') html += '<span class="ai-badge">🤖 AI生成</span>';
+  html += '</div><div class="plan-subtitle">' + plan.startDate.toISOString().split('T')[0] + ' 出发 · ' + plan.budget.people + '人 · 预估¥' + total + '（人均¥' + pp + '/日）</div>';
 
-  // Weather bar
   html += '<div class="weather-bar">';
   plan.days.forEach(function(day) {
-    html += '<div class="w-chip"><span class="w-date">' + day.dateStr + '</span> '
-      + '<span class="w-icon">' + day.weather.weatherDesc.split(' ')[0] + '</span> '
-      + '<span class="w-desc">' + day.weather.weatherDesc.split(' ')[1] + '</span> '
-      + day.weather.tempMin + '~' + day.weather.tempMax + '°C</div>';
+    html += '<div class="w-chip"><span class="w-date">' + day.dateStr + '</span> <span class="w-icon">' + day.weather.weatherDesc.split(' ')[0] + '</span> ' + day.weather.tempMin + '~' + day.weather.tempMax + '°C</div>';
   });
   html += '</div>';
 
-  // Day cards
-  plan.days.forEach(function(day, dayIdx) {
-    var colorClass = 's' + dayIdx;
-    html += '<div class="day-card"><div class="day-hd" onclick="switchMapDay(' + dayIdx + ')">';
-    html += '<span class="day-dot d' + dayIdx + '"></span>' + day.label;
-    html += '<span class="day-weather">' + day.weather.tempMin + '~' + day.weather.tempMax + '°C '
-      + (day.weather.isRainy ? '🌧' : '☀️') + '</span>';
-    html += '<span style="margin-left:4px;font-size:10px;color:#667;">点击→地图</span></div>';
-
-    day.stops.forEach(function(stop, idx) {
-      html += '<div class="stop-row" onclick="focusStop(' + dayIdx + ',' + idx + ')">';
-      html += '<span class="stop-num ' + colorClass + '">' + (idx+1) + '</span>';
-      html += '<div class="stop-info"><div class="s-name">' + stop.icon + ' ' + stop.name + '</div>';
-      html += '<div class="s-note">' + stop.note + '</div></div>';
-      html += '<span style="font-size:11px;color:#e94560;">' + stop.time + '</span></div>';
-
+  plan.days.forEach(function(day, di) {
+    var cc = 's'+di;
+    html += '<div class="day-card"><div class="day-hd" onclick="switchMapDay('+di+')"><span class="day-dot d'+di+'"></span>'+day.label+'<span class="day-weather">'+day.weather.tempMin+'~'+day.weather.tempMax+'°C '+(day.weather.isRainy?'🌧':'☀️')+'</span><span style="margin-left:4px;font-size:10px;color:#667;">点击→地图</span></div>';
+    day.stops.forEach(function(stop,idx){
+      html += '<div class="stop-row" onclick="focusStop('+di+','+idx+')"><span class="stop-num '+cc+'">'+(idx+1)+'</span><div class="stop-info"><div class="s-name">'+stop.icon+' '+stop.name+'</div><div class="s-note">'+stop.note+'</div></div><span style="font-size:11px;color:#e94560;">'+stop.time+'</span></div>';
       var seg = null;
-      for (var s = 0; s < day.segments.length; s++) {
-        if (day.segments[s].from === idx) { seg = day.segments[s]; break; }
-      }
-      if (seg && day.stops[seg.to]) {
-        html += '<a class="seg-link" href="javascript:void(0)" onclick="navSegment(' + dayIdx + ',' + seg.from + ',' + seg.to + ',\'' + seg.mode + '\')">';
-        html += '<span class="seg-mode ' + seg.mode + '">' + (seg.mode==='walk'?'🚶 步行':seg.mode==='taxi'?'🚕 打车':seg.mode==='metro'?'🚇 地铁':'🚂 火车') + '</span>';
-        html += '<span class="seg-desc">' + seg.desc + '</span>';
-        html += '<span style="margin-left:auto;font-size:10px;color:#e94560;">🔗 导航 →</span></a>';
+      for (var s=0;s<day.segments.length;s++){if(day.segments[s].from===idx){seg=day.segments[s];break;}}
+      if(seg&&day.stops[seg.to]){
+        html += '<a class="seg-link" href="javascript:void(0)" onclick="navSegment('+di+','+seg.from+','+seg.to+',\''+seg.mode+'\')"><span class="seg-mode '+seg.mode+'">'+(seg.mode==='walk'?'🚶 步行':seg.mode==='taxi'?'🚕 打车':seg.mode==='metro'?'🚇 地铁':'🚂 火车')+'</span><span class="seg-desc">'+seg.desc+'</span><span style="margin-left:auto;font-size:10px;color:#e94560;">🔗 导航 →</span></a>';
       }
     });
     html += '</div>';
   });
 
-  // Budget breakdown
-  html += '<div class="day-card"><div class="day-hd">💰 预算估算</div>';
-  html += '<div class="budget-bar">';
-  html += '🏨 住宿：¥' + (plan.budget.daily*0.35).toFixed(0) + '/天 &nbsp;';
-  html += '🍜 餐饮：¥' + (plan.budget.daily*0.3).toFixed(0) + '/天 &nbsp;';
-  html += '🚇 交通：¥' + (plan.budget.daily*0.15).toFixed(0) + '/天 &nbsp;';
-  html += '🎫 门票：¥' + (plan.budget.daily*0.2).toFixed(0) + '/天<br>';
-  html += '<b>合计：¥' + plan.budget.total + '（' + plan.budget.people + '人 × ' + plan.days.length + '天）</b>';
-  html += '</div></div>';
-
+  html += '<div class="day-card"><div class="day-hd">💰 预算估算</div><div class="budget-bar">🏨 住宿：¥'+(plan.budget.daily*0.35).toFixed(0)+'/天 &nbsp; 🍜 餐饮：¥'+(plan.budget.daily*0.3).toFixed(0)+'/天 &nbsp; 🚇 交通：¥'+(plan.budget.daily*0.15).toFixed(0)+'/天 &nbsp; 🎫 门票：¥'+(plan.budget.daily*0.2).toFixed(0)+'/天<br><b>合计：¥'+total+'（'+plan.budget.people+'人 × '+plan.days.length+'天）</b></div></div>';
   panel.innerHTML = html;
 }
 
 // ============================================================
 //  MAP
 // ============================================================
-var map = null;
-var infoWin = null;
-var currentMapDay = 0;
-var mapMarkers = {};
-var mapLines = {};
-
-(function initMap() {
-  var s = document.createElement('script');
-  s.src = 'https://webapi.amap.com/maps?v=2.0&key=dc297388d7c4fb44578ec0f9f5503f71';
-  s.onload = function() {
-    map = new AMap.Map('map', {center:[112.977,28.200],zoom:14,mapStyle:'amap://styles/dark',viewMode:'2D'});
-    infoWin = new AMap.InfoWindow({offset:new AMap.Pixel(0,-30)});
-  };
+var map=null,infoWin=null,currentMapDay=0,mapMarkers={},mapLines={};
+(function initMap(){
+  var s=document.createElement('script');
+  s.src='https://webapi.amap.com/maps?v=2.0&key=dc297388d7c4fb44578ec0f9f5503f71';
+  s.onload=function(){map=new AMap.Map('map',{center:[112.977,28.200],zoom:14,mapStyle:'amap://styles/dark',viewMode:'2D'});infoWin=new AMap.InfoWindow({offset:new AMap.Pixel(0,-30)});};
   document.head.appendChild(s);
 })();
 
-function makeMarkerHTML(num, color) {
-  return '<div style="background:'+color+';color:white;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;border:2px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.4);">'+num+'</div>';
+function renderAllDaysOnMap(plan){
+  if(!map||!plan)return;
+  Object.keys(mapMarkers).forEach(function(k){(mapMarkers[k]||[]).forEach(function(m){try{m.setMap(null)}catch(e){}})});
+  Object.keys(mapLines).forEach(function(k){(mapLines[k]||[]).forEach(function(p){try{p.setMap(null)}catch(e){}})});
+  mapMarkers={};mapLines={};currentMapDay=0;switchMapDay(0);
 }
 
-var dayColors = ['#e94560','#5b9bd5','#a080d0','#50d090','#f0a050'];
-var dayCss = ['d0','d1','d2','d3','d4'];
-
-function renderAllDaysOnMap(plan) {
-  if (!map || !plan) return;
-  // Clear all
-  Object.keys(mapMarkers).forEach(function(k){mapMarkers[k].forEach(function(m){try{m.setMap(null)}catch(e){}})});
-  Object.keys(mapLines).forEach(function(k){mapLines[k].forEach(function(p){try{p.setMap(null)}catch(e){}})});
-  mapMarkers = {}; mapLines = {};
-
-  currentMapDay = 0;
-  switchMapDay(0);
-}
-
-function switchMapDay(dayIdx) {
-  if (!map || !planRenderData) return;
-  if (dayIdx >= planRenderData.days.length) return;
-  currentMapDay = dayIdx;
-  var day = planRenderData.days[dayIdx];
-  var color = dayColors[dayIdx];
-
-  // Hide all, then show selected day
-  Object.keys(mapMarkers).forEach(function(k){mapMarkers[k].forEach(function(m){try{m.setMap(null)}catch(e){}})});
-  Object.keys(mapLines).forEach(function(k){mapLines[k].forEach(function(p){try{p.setMap(null)}catch(e){}})});
-
-  map.setZoomAndCenter(planRenderData.city.zoom || 14, planRenderData.city.center);
-
-  var markers = [];
-  day.stops.forEach(function(stop, idx) {
-    var pos = [stop.lng, stop.lat];
-    var m = new AMap.Marker({position:pos,content:makeMarkerHTML(idx+1,color),anchor:'center',zIndex:100,map:map});
+function switchMapDay(di){
+  if(!map||!planRenderData||di>=planRenderData.days.length)return;
+  currentMapDay=di;
+  var day=planRenderData.days[di];
+  var colors=['#e94560','#5b9bd5','#a080d0','#50d090','#f0a050'];
+  var color=colors[di%5];
+  Object.keys(mapMarkers).forEach(function(k){(mapMarkers[k]||[]).forEach(function(m){try{m.setMap(null)}catch(e){}})});
+  Object.keys(mapLines).forEach(function(k){(mapLines[k]||[]).forEach(function(p){try{p.setMap(null)}catch(e){}})});
+  map.setZoomAndCenter(planRenderData.city.zoom||14,planRenderData.city.center);
+  var markers=[];
+  day.stops.forEach(function(stop,idx){
+    var pos=[stop.lng,stop.lat];
+    var m=new AMap.Marker({position:pos,content:'<div style="background:'+color+';color:white;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;border:2px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.4);">'+(idx+1)+'</div>',anchor:'center',zIndex:100,map:map});
     (function(p,s){m.on('click',function(){infoWin.setContent('<div style="font-family:Microsoft YaHei;font-size:13px;line-height:1.6;color:#1a1a2e;background:#f8f8f8;padding:10px 14px;border-radius:8px;"><b style="color:#c23152;">'+s.icon+' '+s.name+'</b><br><span style="color:#555;">🕐'+s.time+'</span><br><span style="color:#333;">'+s.note+'</span></div>');infoWin.open(map,p);});})(pos,stop);
     markers.push(m);
   });
-  mapMarkers[dayIdx] = markers;
-
-  // Connection lines
-  var lines = [];
-  for (var i = 1; i < day.stops.length; i++) {
-    var fromPos = [day.stops[i-1].lng, day.stops[i-1].lat];
-    var toPos = [day.stops[i].lng, day.stops[i].lat];
-    var poly = new AMap.Polyline({path:[fromPos,toPos],strokeColor:color,strokeWeight:2,strokeOpacity:.35,strokeStyle:'dashed',strokeDasharray:[6,4],map:map,zIndex:40});
-    lines.push(poly);
+  mapMarkers[di]=markers;
+  var lines=[];
+  for(var i=1;i<day.stops.length;i++){
+    var fp=[day.stops[i-1].lng,day.stops[i-1].lat],tp=[day.stops[i].lng,day.stops[i].lat];
+    lines.push(new AMap.Polyline({path:[fp,tp],strokeColor:color,strokeWeight:2,strokeOpacity:.35,strokeStyle:'dashed',strokeDasharray:[6,4],map:map,zIndex:40}));
   }
-  mapLines[dayIdx] = lines;
+  mapLines[di]=lines;
 }
 
-function focusStop(dayIdx, stopIdx) {
-  switchMapDay(dayIdx);
-  var markers = mapMarkers[dayIdx];
-  if (markers && markers[stopIdx]) {
-    var pos = markers[stopIdx].getPosition();
-    map.setZoomAndCenter(Math.max(map.getZoom(),15), pos);
-    setTimeout(function(){markers[stopIdx].emit('click');},200);
-  }
-}
+function focusStop(di,si){switchMapDay(di);var ms=mapMarkers[di];if(ms&&ms[si]){var pos=ms[si].getPosition();map.setZoomAndCenter(Math.max(map.getZoom(),15),pos);setTimeout(function(){ms[si].emit('click');},200);}}
 
-function navSegment(dayIdx, fromIdx, toIdx, mode) {
-  if (!planRenderData) return;
-  var day = planRenderData.days[dayIdx];
-  var fromStop = day.stops[fromIdx];
-  var toStop = day.stops[toIdx];
-  if (!fromStop || !toStop) return;
-  var modeMap = {walk:'walking',taxi:'driving',metro:'transit',train:'driving'};
-  var amapMode = modeMap[mode] || 'driving';
-  var url = 'https://uri.amap.com/navigation?from='+fromStop.lng+','+fromStop.lat+','+encodeURIComponent(fromStop.name)
-    +'&to='+toStop.lng+','+toStop.lat+','+encodeURIComponent(toStop.name)+'&mode='+amapMode;
-  window.open(url, '_blank');
+function navSegment(di,fi,ti,mode){
+  if(!planRenderData)return;
+  var from=planRenderData.days[di].stops[fi],to=planRenderData.days[di].stops[ti];
+  if(!from||!to)return;
+  var mm={walk:'walking',taxi:'driving',metro:'transit',train:'driving'};
+  var url='https://uri.amap.com/navigation?from='+from.lng+','+from.lat+','+encodeURIComponent(from.name)+'&to='+to.lng+','+to.lat+','+encodeURIComponent(to.name)+'&mode='+(mm[mode]||'driving');
+  window.open(url,'_blank');
 }
 
 // ============================================================
-//  CITY DATALIST
+//  INIT
 // ============================================================
-(function() {
-  var dl = document.getElementById('cityList');
-  Object.keys(CITY_DB).forEach(function(k) {
-    var opt = document.createElement('option'); opt.value = k; dl.appendChild(opt);
-  });
+(function(){
+  var dl=document.getElementById('cityList');
+  Object.keys(CITY_DB).forEach(function(k){var o=document.createElement('option');o.value=k;dl.appendChild(o);});
+  restoreAISettings();
 })();
 
-function toast(msg) {
-  var t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(function(){t.classList.remove('show');},2500);
-}
+function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2500);}
 </script>
 </body>
 </html>
